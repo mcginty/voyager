@@ -6,10 +6,12 @@ NotFound = (msg) ->
 
 connect = require "connect"
 express = require "express"
+colors  = require "colors"
 io      = require "socket.io"
+redis   = require("redis").createClient(null,null,{detect_buffers:true})
 port    = (process.env.PORT or 8081)
+server  = express.createServer()
 
-server = express.createServer()
 server.configure ->
   server.set "views", __dirname + "/views"
   server.set "view options",
@@ -37,7 +39,6 @@ server.error (err, req, res, next) ->
         title: "The Server Encountered an Error"
         description: ""
         author: ""
-        analyticssiteid: "XXXXXXX"
         error: err
 
       status: 500
@@ -47,6 +48,9 @@ server.listen port
 io = io.listen(server)
 io.sockets.on "connection", (socket) ->
   console.log "Client Connected"
+  redis.zrange "trip", 0, -1, (err, replies) ->
+    socket.emit "location_backfill", replies
+
   socket.on "message", (data) ->
     socket.broadcast.emit "server_message", data
     socket.emit "server_message", data
@@ -60,7 +64,17 @@ server.get "/", (req, res) ->
       title: "Node.js Bootstrap"
       description: "Your Page Description"
       author: "Your Name"
-      analyticssiteid: "XXXXXXX"
+
+server.post "/report", (req,res) ->
+  console.log "#{req.body}"
+  id = redis.incr "report"
+  redis.zadd "trip", req.body.timestamp, JSON.stringify({
+    latitude  : req.body.latitude,
+    longitude : req.body.longitude,
+    altitude  : req.body.altitude,
+    accuracy  : req.body.accuracy,
+  })
+  io.sockets.emit("location_update", req.body)
 
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")

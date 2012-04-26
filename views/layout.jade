@@ -7,32 +7,13 @@ html
     meta(name="description", content=description)
     meta(name="author", content=author)
     meta(name="viewport", content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+    script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyDNuYNVifswQzRykuYlpRGdhtEuqVvM4sY&sensor=false')
     style
-      body {
-        padding-top: 60px;
-      }
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
   body
-    div.navbar.navbar-fixed-top
-      div.navbar-inner
-        div.container
-          a.btn.btn-navbar(data-toggle="collapse", data-target=".nav_collapse")
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand=title
-          div.nav-collapse
-            ul.nav
-              li.activate
-                a(href="#") Home
-              li
-                a(href="#about") About
-              li
-                a(href="#contact") Contact
-
-    div.container
-      block content
+    block content
 
     block footer
       footer
