@@ -102,7 +102,7 @@ $(document).ready ->
     center: new google.maps.LatLng(37.71859032558813, -97.822265625)
     zoom: 5
     mapTypeControlOptions:
-      mapTypeIds: ['arteries', 'oceans_of_dehydrated_pee', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.TERRAIN]
+      mapTypeIds: [google.maps.MapTypeId.SATELLITE, 'arteries', 'oceans_of_dehydrated_pee', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
 
   map = new google.maps.Map(document.getElementById("map_canvas"), mapsOptions)
   map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
