@@ -108,6 +108,7 @@ $(document).ready ->
   map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
 
   map.mapTypes.set 'arteries', arteriesMapType 
+  map.setMapTypeId google.maps.MapTypeId.SATELLITE
   #cloudLayer = new google.maps.weather.CloudLayer();
   #cloudLayer.setMap(map);
 
