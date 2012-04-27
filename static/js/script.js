@@ -159,7 +159,7 @@
     map = new google.maps.Map(document.getElementById("map_canvas"), mapsOptions);
     map.mapTypes.set('oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType);
     map.mapTypes.set('arteries', arteriesMapType);
-    map.setMapTypeId('arteries');
+    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
     home = new google.maps.LatLng(40.105957017645, -88.21916878223419);
     hulu = new google.maps.LatLng(34.031344, -118.456717);
     setTimeout((function() {
