@@ -75,6 +75,7 @@ server.post "/report", (req,res) ->
     accuracy  : req.body.accuracy,
   })
   io.sockets.emit("location_update", req.body)
+  res.send (201)
 
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")
