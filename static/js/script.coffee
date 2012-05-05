@@ -109,8 +109,6 @@ $(document).ready ->
 
   map.mapTypes.set 'arteries', arteriesMapType 
   map.setMapTypeId google.maps.MapTypeId.SATELLITE
-  #cloudLayer = new google.maps.weather.CloudLayer();
-  #cloudLayer.setMap(map);
 
   home = new google.maps.LatLng(40.105957017645, -88.21916878223419)
   hulu = new google.maps.LatLng(34.031344, -118.456717)
@@ -141,10 +139,8 @@ $(document).ready ->
     socket.emit "message", "Message Sent on " + new Date()
 
   socket.on "location_backfill", (pts) ->
-    path = poly.getPath()
-    for pt in pts
-      location = JSON.parse(pt)
-      path.push new google.maps.LatLng(location.latitude,location.longitude) 
+    console.log("Received encoded backfill polyline: #{pts.encodedPoints}")
+    poly.setPath google.maps.geometry.encoding.decodePath(pts.encodedPoints)
 
   socket.on "location_update", (data) ->
     path = poly.getPath()

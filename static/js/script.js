@@ -188,15 +188,8 @@
       return socket.emit("message", "Message Sent on " + new Date());
     });
     socket.on("location_backfill", function(pts) {
-      var location, path, pt, _i, _len, _results;
-      path = poly.getPath();
-      _results = [];
-      for (_i = 0, _len = pts.length; _i < _len; _i++) {
-        pt = pts[_i];
-        location = JSON.parse(pt);
-        _results.push(path.push(new google.maps.LatLng(location.latitude, location.longitude)));
-      }
-      return _results;
+      console.log("Received encoded backfill polyline: " + pts.encodedPoints);
+      return poly.setPath(google.maps.geometry.encoding.decodePath(pts.encodedPoints));
     });
     return socket.on("location_update", function(data) {
       var path;

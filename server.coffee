@@ -8,9 +8,12 @@ connect = require "connect"
 express = require "express"
 colors  = require "colors"
 io      = require "socket.io"
+encoder = require("./lib/polyline_encoder")
 redis   = require("redis").createClient(null,null,{detect_buffers:true})
 port    = (process.env.PORT or 8081)
 server  = express.createServer()
+
+polyline = new encoder.PolylineEncoder
 
 server.configure ->
   server.set "views", __dirname + "/views"
@@ -48,8 +51,13 @@ server.listen port
 io = io.listen(server)
 io.sockets.on "connection", (socket) ->
   console.log "Client Connected"
-  redis.zrange "trip", 0, -1, (err, replies) ->
-    socket.emit "location_backfill", replies
+  redis.zrange "trip", 0, -1, (err, pts) ->
+    latlngs = []
+    for pt in pts
+      location = JSON.parse pt
+      latlngs.push new encoder.LatLng location.latitude, location.longitude
+    encoded = polyline.dpEncode latlngs
+    socket.emit "location_backfill", encoded
 
   socket.on "message", (data) ->
     socket.broadcast.emit "server_message", data
@@ -69,10 +77,10 @@ server.post "/report", (req,res) ->
   console.log "#{req.body}"
   id = redis.incr "report"
   redis.zadd "trip", req.body.timestamp, JSON.stringify({
-    latitude  : req.body.latitude,
-    longitude : req.body.longitude,
-    altitude  : req.body.altitude,
-    accuracy  : req.body.accuracy,
+    latitude  : req.body.latitude
+    longitude : req.body.longitude
+    altitude  : req.body.altitude
+    accuracy  : req.body.accuracy
   })
   io.sockets.emit("location_update", req.body)
   res.send (201)

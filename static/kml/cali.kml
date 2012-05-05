@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+  <name>California Trip</name>
+  <description><![CDATA[]]></description>
+  <Style id="style15">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style14">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style19">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style3">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style13">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style4">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style18">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style6">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style12">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style20">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style10">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style17">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style7">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style2">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style8">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style9">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style11">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style1">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style16">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style5">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Placemark>
+    <name>Vegas Storm Drain</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style15</styleUrl>
+    <Point>
+      <coordinates>-115.181229,36.098602,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cadillac Ranch</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style14</styleUrl>
+    <Point>
+      <coordinates>-101.987091,35.187225,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Museum of Osteology</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style19</styleUrl>
+    <Point>
+      <coordinates>-97.441765,35.364784,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Victorville Rock Faces</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style3</styleUrl>
+    <Point>
+      <coordinates>-117.309349,34.574982,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Red Rocks State Park</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style13</styleUrl>
+    <Point>
+      <coordinates>-108.608482,35.544502,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Historic Santa Fe</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style4</styleUrl>
+    <Point>
+      <coordinates>-105.908203,35.710838,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Meteor Crater</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style18</styleUrl>
+    <Point>
+      <coordinates>-111.022942,35.027782,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Petrified Forest</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style6</styleUrl>
+    <Point>
+      <coordinates>-109.804230,34.918594,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Buffalo Camping</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style12</styleUrl>
+    <Point>
+      <coordinates>-98.624001,34.710678,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>NM Lake Camping</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style20</styleUrl>
+    <Point>
+      <coordinates>-104.190475,35.374249,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Church Rock Camping</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style10</styleUrl>
+    <Point>
+      <coordinates>-108.608780,35.542740,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Volcano Camping</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style17</styleUrl>
+    <Point>
+      <coordinates>-111.520691,35.280434,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Volcano Volcano</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style7</styleUrl>
+    <Point>
+      <coordinates>-111.503159,35.365116,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Desert View Campground</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style2</styleUrl>
+    <Point>
+      <coordinates>-111.824577,36.042297,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Vegas Hotel</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style8</styleUrl>
+    <Point>
+      <coordinates>-115.178345,36.102448,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Home!</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style9</styleUrl>
+    <Point>
+      <coordinates>-118.476158,34.035088,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Abandoned Campground</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style11</styleUrl>
+    <Point>
+      <coordinates>-91.330421,37.529503,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Tulsa Underground Tunnels</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style1</styleUrl>
+    <Point>
+      <coordinates>-95.991096,36.153996,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Desert Hills Motel</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style16</styleUrl>
+    <Point>
+      <coordinates>-95.918350,36.147804,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cedar Glen Camping</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style5</styleUrl>
+    <Point>
+      <coordinates>-117.618385,34.255657,0.000000</coordinates>
+    </Point>
+  </Placemark>
+</Document>
+</kml>
