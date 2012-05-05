@@ -95,23 +95,23 @@ $(document).ready ->
         ]
       }
     ]
-  arteriesMapType = new google.maps.StyledMapType(arteriesStyle, {name: "Arteries"})
-  oceansOfDehydratedPeeMapType = new google.maps.StyledMapType(oceanOfDehydratedPeeStyle, {name: "Oceans of Dehydrated Pee"})
+  arteriesMapType = new google.maps.StyledMapType arteriesStyle, {name: "Arteries"}
+  oceansOfDehydratedPeeMapType = new google.maps.StyledMapType oceanOfDehydratedPeeStyle, {name: "Oceans of Dehydrated Pee"}
 
   mapsOptions =
-    center: new google.maps.LatLng(37.71859032558813, -97.822265625)
+    center: new google.maps.LatLng 37.71859032558813, -97.822265625
     zoom: 5
     mapTypeControlOptions:
       mapTypeIds: [google.maps.MapTypeId.SATELLITE, 'arteries', 'oceans_of_dehydrated_pee', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
 
-  map = new google.maps.Map(document.getElementById("map_canvas"), mapsOptions)
+  map = new google.maps.Map document.getElementById("map_canvas"), mapsOptions
   map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
 
   map.mapTypes.set 'arteries', arteriesMapType 
   map.setMapTypeId google.maps.MapTypeId.SATELLITE
 
-  home = new google.maps.LatLng(40.105957017645, -88.21916878223419)
-  hulu = new google.maps.LatLng(34.031344, -118.456717)
+  home = new google.maps.LatLng 40.105957017645, -88.21916878223419
+  hulu = new google.maps.LatLng 34.031344, -118.456717
 
   setTimeout (->
     new google.maps.Marker
@@ -131,7 +131,7 @@ $(document).ready ->
     strokeColor: "#2222CC"
     strokeOpacity: 1.0
     strokeWeight: 2
-  poly = new google.maps.Polyline(polyOptions);
+  poly = new google.maps.Polyline polyOptions
   poly.setMap map
 
   socket = io.connect()
@@ -144,4 +144,4 @@ $(document).ready ->
 
   socket.on "location_update", (data) ->
     path = poly.getPath()
-    path.push new google.maps.LatLng(data.latitude,data.longitude)
+    path.push new google.maps.LatLng data.latitude, data.longitude

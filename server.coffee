@@ -51,6 +51,7 @@ server.listen port
 io = io.listen(server)
 io.sockets.on "connection", (socket) ->
   console.log "Client Connected"
+  start = Date.now()
   redis.zrange "trip", 0, -1, (err, pts) ->
     latlngs = []
     for pt in pts
@@ -58,6 +59,7 @@ io.sockets.on "connection", (socket) ->
       latlngs.push new encoder.LatLng location.latitude, location.longitude
     encoded = polyline.dpEncode latlngs
     socket.emit "location_backfill", encoded
+  console.log "Backfill took #{Date.now()-start} millisecond(s)"
 
   socket.on "message", (data) ->
     socket.broadcast.emit "server_message", data
