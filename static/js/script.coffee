@@ -99,7 +99,7 @@ $(document).ready ->
   oceansOfDehydratedPeeMapType = new google.maps.StyledMapType oceanOfDehydratedPeeStyle, {name: "Oceans of Dehydrated Pee"}
 
   mapsOptions =
-    center: new google.maps.LatLng 37.71859032558813, -97.822265625
+    center: new google.maps.LatLng(37.71859032558813, -97.822265625)
     zoom: 5
     mapTypeControlOptions:
       mapTypeIds: [google.maps.MapTypeId.SATELLITE, 'arteries', 'oceans_of_dehydrated_pee', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
