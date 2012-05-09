@@ -3,98 +3,68 @@
 $(document).ready ->
 
   arteriesStyle = [
-      {
-        stylers: [
-          { visibility: "off" }
-        ]
-      },{
-        stylers: [
-          { saturation: -99 }
-        ]
-      },{
-        featureType: "water",
-        stylers: [
-          { visibility: "simplified" }
-        ]
-      },{
-        featureType: "road.highway",
-        stylers: [
-          { visibility: "on" },
-          { saturation: 100 },
-          { gamma: 1.72 },
-          { hue: "#ff0900" },
-          { lightness: 30 }
-        ]
-      },{
-        featureType: "road.highway",
-        elementType: "labels",
-        stylers: [
-          { visibility: "on" },
-          { hue: "#0044ff" },
-          { saturation: -61 },
-          { lightness: 30 }
-        ]
-      },{
-        featureType: "road.local",
-        stylers: [
-          { visibility: "on" },
-          { hue: "#ff6e00" },
-          { gamma: 0.58 },
-          { saturation: 97 },
-          { lightness: 21 }
-        ]
-      },{
-        featureType: "road.local",
-        stylers: [
-          { visibility: "on" },
-          { hue: "#ff8800" },
-          { saturation: 28 },
-          { lightness: 5 },
-          { gamma: 0.82 }
-        ]
-      }
-    ]
+    {
+      stylers: [
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "water",
+      stylers: [
+        { visibility: "on" },
+        { lightness: -10 },
+        { saturation: 57 }
+      ]
+    },{
+      featureType: "road",
+      stylers: [
+        { visibility: "on" },
+        { hue: "#003bff" },
+        { saturation: -100 },
+        { gamma: 0.89 }
+      ]
+    }
+  ]
 
-    oceanOfDehydratedPeeStyle = [
-      {
-      },{
-        featureType: "water",
-        stylers: [
-          { hue: "#ffff00" },
-          { saturation: 38 },
-          { lightness: -28 }
-        ]
-      },{
-        featureType: "poi",
-        stylers: [
-          { hue: "#00fff7" },
-          { lightness: 41 },
-          { visibility: "off" }
-        ]
-      },{
-        featureType: "administrative",
-        stylers: [
-          { hue: "#ff1a00" },
-          { visibility: "off" }
-        ]
-      },{
-        featureType: "road",
-        stylers: [
-          { lightness: -3 },
-          { gamma: 0.58 },
-          { saturation: 56 },
-          { hue: "#00aaff" }
-        ]
-      },{
-        featureType: "landscape",
-        stylers: [
-          { hue: "#ff006e" },
-          { lightness: 100 },
-          { saturation: -100 },
-          { visibility: "on" }
-        ]
-      }
-    ]
+  oceanOfDehydratedPeeStyle = [
+    {
+    },{
+      featureType: "water",
+      stylers: [
+        { hue: "#ffff00" },
+        { saturation: 38 },
+        { lightness: -28 }
+      ]
+    },{
+      featureType: "poi",
+      stylers: [
+        { hue: "#00fff7" },
+        { lightness: 41 },
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "administrative",
+      stylers: [
+        { hue: "#ff1a00" },
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "road",
+      stylers: [
+        { lightness: -3 },
+        { gamma: 0.58 },
+        { saturation: 56 },
+        { hue: "#00aaff" }
+      ]
+    },{
+      featureType: "landscape",
+      stylers: [
+        { hue: "#ff006e" },
+        { lightness: 100 },
+        { saturation: -100 },
+        { visibility: "on" }
+      ]
+    }
+  ]
   arteriesMapType = new google.maps.StyledMapType arteriesStyle, {name: "Arteries"}
   oceansOfDehydratedPeeMapType = new google.maps.StyledMapType oceanOfDehydratedPeeStyle, {name: "Oceans of Dehydrated Pee"}
 
@@ -112,12 +82,14 @@ $(document).ready ->
 
   home = new google.maps.LatLng 40.105957017645, -88.21916878223419
   hulu = new google.maps.LatLng 34.031344, -118.456717
+  current = null
 
   setTimeout (->
     new google.maps.Marker
       map:map
       animation:google.maps.Animation.DROP
       position:home
+      icon:'http://www.google.com/mapfiles/marker_black.png'
     ), 500
 
   setTimeout (->
@@ -125,10 +97,10 @@ $(document).ready ->
       map:map
       animation:google.maps.Animation.DROP
       position:hulu
+      icon:'http://www.google.com/mapfiles/marker_black.png'
     ), 1000
-
   polyOptions =
-    strokeColor: "#2222CC"
+    strokeColor: "#CC2239"
     strokeOpacity: 1.0
     strokeWeight: 2
   poly = new google.maps.Polyline polyOptions
@@ -140,11 +112,19 @@ $(document).ready ->
 
   socket.on "location_backfill", (pts) ->
     #console.log("Received encoded backfill polyline: #{pts.encodedPoints}")
-    poly.setPath google.maps.geometry.encoding.decodePath(pts.encodedPoints)
+    path = google.maps.geometry.encoding.decodePath pts.encodedPoints
+    poly.setPath path
+    current = new google.maps.Marker
+      map:map
+      animation:google.maps.Animation.DROP
+      position:path[0]
+      icon:'http://labs.google.com/ridefinder/images/mm_20_red.png'
 
   socket.on "client_count", (count) ->
     $("#client_count").html if count == 1 then "1 user" else "#{count} users"
 
   socket.on "location_update", (data) ->
     path = poly.getPath()
-    path.push new google.maps.LatLng data.latitude, data.longitude
+    latlng = new google.maps.LatLng data.latitude, data.longitude
+    path.push latlng
+    current.setPosition latlng

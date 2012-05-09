@@ -1,7 +1,7 @@
 (function() {
 
   $(document).ready(function() {
-    var arteriesMapType, arteriesStyle, home, hulu, map, mapsOptions, oceanOfDehydratedPeeStyle, oceansOfDehydratedPeeMapType, poly, polyOptions, socket;
+    var arteriesMapType, arteriesStyle, current, home, hulu, map, mapsOptions, oceanOfDehydratedPeeStyle, oceansOfDehydratedPeeMapType, poly, polyOptions, socket;
     arteriesStyle = [
       {
         stylers: [
@@ -10,75 +10,27 @@
           }
         ]
       }, {
-        stylers: [
-          {
-            saturation: -99
-          }
-        ]
-      }, {
         featureType: "water",
         stylers: [
           {
-            visibility: "simplified"
+            visibility: "on"
+          }, {
+            lightness: -10
+          }, {
+            saturation: 57
           }
         ]
       }, {
-        featureType: "road.highway",
+        featureType: "road",
         stylers: [
           {
             visibility: "on"
           }, {
-            saturation: 100
+            hue: "#003bff"
           }, {
-            gamma: 1.72
+            saturation: -100
           }, {
-            hue: "#ff0900"
-          }, {
-            lightness: 30
-          }
-        ]
-      }, {
-        featureType: "road.highway",
-        elementType: "labels",
-        stylers: [
-          {
-            visibility: "on"
-          }, {
-            hue: "#0044ff"
-          }, {
-            saturation: -61
-          }, {
-            lightness: 30
-          }
-        ]
-      }, {
-        featureType: "road.local",
-        stylers: [
-          {
-            visibility: "on"
-          }, {
-            hue: "#ff6e00"
-          }, {
-            gamma: 0.58
-          }, {
-            saturation: 97
-          }, {
-            lightness: 21
-          }
-        ]
-      }, {
-        featureType: "road.local",
-        stylers: [
-          {
-            visibility: "on"
-          }, {
-            hue: "#ff8800"
-          }, {
-            saturation: 28
-          }, {
-            lightness: 5
-          }, {
-            gamma: 0.82
+            gamma: 0.89
           }
         ]
       }
@@ -162,22 +114,25 @@
     map.setMapTypeId('arteries');
     home = new google.maps.LatLng(40.105957017645, -88.21916878223419);
     hulu = new google.maps.LatLng(34.031344, -118.456717);
+    current = null;
     setTimeout((function() {
       return new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
-        position: home
+        position: home,
+        icon: 'http://www.google.com/mapfiles/marker_black.png'
       });
     }), 500);
     setTimeout((function() {
       return new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
-        position: hulu
+        position: hulu,
+        icon: 'http://www.google.com/mapfiles/marker_black.png'
       });
     }), 1000);
     polyOptions = {
-      strokeColor: "#2222CC",
+      strokeColor: "#CC2239",
       strokeOpacity: 1.0,
       strokeWeight: 2
     };
@@ -188,15 +143,25 @@
       return socket.emit("message", "Message Sent on " + new Date());
     });
     socket.on("location_backfill", function(pts) {
-      return poly.setPath(google.maps.geometry.encoding.decodePath(pts.encodedPoints));
+      var path;
+      path = google.maps.geometry.encoding.decodePath(pts.encodedPoints);
+      poly.setPath(path);
+      return current = new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        position: path[0],
+        icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png'
+      });
     });
     socket.on("client_count", function(count) {
       return $("#client_count").html(count === 1 ? "1 user" : "" + count + " users");
     });
     return socket.on("location_update", function(data) {
-      var path;
+      var latlng, path;
       path = poly.getPath();
-      return path.push(new google.maps.LatLng(data.latitude, data.longitude));
+      latlng = new google.maps.LatLng(data.latitude, data.longitude);
+      path.push(latlng);
+      return current.setPosition(latlng);
     });
   });
 

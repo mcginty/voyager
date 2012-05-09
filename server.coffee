@@ -9,11 +9,12 @@ express = require "express"
 colors  = require "colors"
 io      = require "socket.io"
 encoder = require("./lib/polyline_encoder")
-redis   = require("redis").createClient(null,null,{detect_buffers:true})
 port    = (process.env.PORT or 8081)
 server  = express.createServer()
 
 polyline = new encoder.PolylineEncoder
+
+redis   = require("redis").createClient(null,null,{detect_buffers:true})
 
 server.configure ->
   server.set "views", __dirname + "/views"
@@ -50,6 +51,7 @@ server.listen port
 
 client_count = 0
 io = io.listen(server)
+io.set 'log level', 1
 io.sockets.on "connection", (socket) ->
   client_count += 1
   console.log "Client Connected. #{client_count} total connections."
@@ -81,7 +83,7 @@ server.get "/", (req, res) ->
       author: "Jake McGinty"
 
 server.post "/report", (req,res) ->
-  console.log "#{req.body}"
+  console.log "report #{req.body.timestamp.bold} -> (#{req.body.latitude},#{req.body.longitude})"
   id = redis.incr "report"
   redis.zadd "trip", req.body.timestamp, JSON.stringify({
     latitude  : req.body.latitude
