@@ -48,10 +48,14 @@ server.error (err, req, res, next) ->
 
 server.listen port
 
+client_count = 0
 io = io.listen(server)
 io.sockets.on "connection", (socket) ->
-  console.log "Client Connected"
-  start = Date.now()
+  client_count += 1
+  console.log "Client Connected. #{client_count} total connections."
+  io.sockets.emit "client_count", client_count
+  # Perform a backfill of points in an encoded polyline for minimum bandwidth usage
+  # and optimized viewing.
   redis.zrange "trip", 0, -1, (err, pts) ->
     latlngs = []
     for pt in pts
@@ -59,14 +63,15 @@ io.sockets.on "connection", (socket) ->
       latlngs.push new encoder.LatLng location.latitude, location.longitude
     encoded = polyline.dpEncode latlngs
     socket.emit "location_backfill", encoded
-  console.log "Backfill took #{Date.now()-start} millisecond(s)"
 
   socket.on "message", (data) ->
     socket.broadcast.emit "server_message", data
     socket.emit "server_message", data
 
   socket.on "disconnect", ->
-    console.log "Client Disconnected."
+    client_count -= 1
+    console.log "Client Disconnected. #{client_count} total connections."
+    io.sockets.emit "client_count", client_count
 
 server.get "/", (req, res) ->
   res.render "index.jade",
@@ -83,9 +88,11 @@ server.post "/report", (req,res) ->
     longitude : req.body.longitude
     altitude  : req.body.altitude
     accuracy  : req.body.accuracy
+    speed     : req.body.speed
   })
   io.sockets.emit("location_update", req.body)
-  res.send (201)
+  res.send (201) # 201 Created is a minimal response to android since it will hang 
+                 # until it gets something back.
 
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")
