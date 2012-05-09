@@ -85,21 +85,27 @@ $(document).ready ->
   current = null
 
   setTimeout (->
-    new google.maps.Marker
+    title = '<div id="content">Urbana, IL</div>'
+    marker = new google.maps.Marker
       map:map
       animation:google.maps.Animation.DROP
       position:home
-      icon:'http://www.google.com/mapfiles/marker_black.png'
-      title:"Urbana, IL"
+      icon:"http://www.google.com/mapfiles/marker_black.png"
+      title:title
+
+    google.maps.event.addListener marker, 'click', -> (new google.maps.InfoWindow content:title).open(map,marker)
     ), 500
 
   setTimeout (->
-    new google.maps.Marker
+    title = '<div id="content">Santa Monica, CA</div>'
+    marker = new google.maps.Marker
       map:map
       animation:google.maps.Animation.DROP
       position:hulu
-      icon:'http://www.google.com/mapfiles/marker_black.png'
-      title:"Santa Monica, CA"
+      icon:"http://www.google.com/mapfiles/marker_black.png"
+      title:title
+
+    google.maps.event.addListener marker, 'click', -> (new google.maps.InfoWindow content:title).open(map,marker)
     ), 1000
   polyOptions =
     strokeColor: "#CC2239"
@@ -113,7 +119,6 @@ $(document).ready ->
     socket.emit "message", "Message Sent on " + new Date()
 
   socket.on "location_backfill", (pts) ->
-    #console.log("Received encoded backfill polyline: #{pts.encodedPoints}")
     path = google.maps.geometry.encoding.decodePath pts.encodedPoints
     poly.setPath path
     current = new google.maps.Marker

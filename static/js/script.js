@@ -116,21 +116,35 @@
     hulu = new google.maps.LatLng(34.031344, -118.456717);
     current = null;
     setTimeout((function() {
-      return new google.maps.Marker({
+      var marker, title;
+      title = '<div id="content">Urbana, IL</div>';
+      marker = new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
         position: home,
-        icon: 'http://www.google.com/mapfiles/marker_black.png',
-        title: "Urbana, IL"
+        icon: "http://www.google.com/mapfiles/marker_black.png",
+        title: title
+      });
+      return google.maps.event.addListener(marker, 'click', function() {
+        return (new google.maps.InfoWindow({
+          content: title
+        })).open(map, marker);
       });
     }), 500);
     setTimeout((function() {
-      return new google.maps.Marker({
+      var marker, title;
+      title = '<div id="content">Santa Monica, CA</div>';
+      marker = new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
         position: hulu,
-        icon: 'http://www.google.com/mapfiles/marker_black.png',
-        title: "Santa Monica, CA"
+        icon: "http://www.google.com/mapfiles/marker_black.png",
+        title: title
+      });
+      return google.maps.event.addListener(marker, 'click', function() {
+        return (new google.maps.InfoWindow({
+          content: title
+        })).open(map, marker);
       });
     }), 1000);
     polyOptions = {
