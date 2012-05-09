@@ -120,7 +120,8 @@
         map: map,
         animation: google.maps.Animation.DROP,
         position: home,
-        icon: 'http://www.google.com/mapfiles/marker_black.png'
+        icon: 'http://www.google.com/mapfiles/marker_black.png',
+        title: "Urbana, IL"
       });
     }), 500);
     setTimeout((function() {
@@ -128,7 +129,8 @@
         map: map,
         animation: google.maps.Animation.DROP,
         position: hulu,
-        icon: 'http://www.google.com/mapfiles/marker_black.png'
+        icon: 'http://www.google.com/mapfiles/marker_black.png',
+        title: "Santa Monica, CA"
       });
     }), 1000);
     polyOptions = {
