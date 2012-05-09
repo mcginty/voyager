@@ -22,7 +22,7 @@ server.configure ->
 
   server.use connect.bodyParser()
   server.use express.cookieParser()
-  server.use express.session(secret: "shhhhhhhhh!")
+  server.use express.session(secret: "3136fb857f8c5d891a64fbc0558b46a4")
   server.use connect.static(__dirname + "/static")
   server.use server.router
 
@@ -32,8 +32,8 @@ server.error (err, req, res, next) ->
       locals:
         title: "404 - Not Found"
         description: ""
-        author: ""
-        analyticssiteid: "XXXXXXX"
+        author: "Jake McGinty"
+        analyticssiteid: "UA-322489-6"
 
       status: 404
   else
@@ -41,7 +41,7 @@ server.error (err, req, res, next) ->
       locals:
         title: "The Server Encountered an Error"
         description: ""
-        author: ""
+        author: "Jake McGinty"
         error: err
 
       status: 500
@@ -71,9 +71,9 @@ io.sockets.on "connection", (socket) ->
 server.get "/", (req, res) ->
   res.render "index.jade",
     locals:
-      title: "Node.js Bootstrap"
-      description: "Your Page Description"
-      author: "Your Name"
+      title: "Trip to Los Angeles"
+      description: "Tracking Jake and Lainey's trip to Los Angeles."
+      author: "Jake McGinty"
 
 server.post "/report", (req,res) ->
   console.log "#{req.body}"
