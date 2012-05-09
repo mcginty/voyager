@@ -188,7 +188,6 @@
       return socket.emit("message", "Message Sent on " + new Date());
     });
     socket.on("location_backfill", function(pts) {
-      console.log("Received encoded backfill polyline: " + pts.encodedPoints);
       return poly.setPath(google.maps.geometry.encoding.decodePath(pts.encodedPoints));
     });
     return socket.on("location_update", function(data) {

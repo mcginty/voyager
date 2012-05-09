@@ -139,7 +139,7 @@ $(document).ready ->
     socket.emit "message", "Message Sent on " + new Date()
 
   socket.on "location_backfill", (pts) ->
-    console.log("Received encoded backfill polyline: #{pts.encodedPoints}")
+    #console.log("Received encoded backfill polyline: #{pts.encodedPoints}")
     poly.setPath google.maps.geometry.encoding.decodePath(pts.encodedPoints)
 
   socket.on "location_update", (data) ->
