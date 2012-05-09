@@ -108,7 +108,7 @@ $(document).ready ->
   map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
 
   map.mapTypes.set 'arteries', arteriesMapType 
-  map.setMapTypeId google.maps.MapTypeId.SATELLITE
+  map.setMapTypeId 'arteries'
 
   home = new google.maps.LatLng 40.105957017645, -88.21916878223419
   hulu = new google.maps.LatLng 34.031344, -118.456717
@@ -141,6 +141,9 @@ $(document).ready ->
   socket.on "location_backfill", (pts) ->
     #console.log("Received encoded backfill polyline: #{pts.encodedPoints}")
     poly.setPath google.maps.geometry.encoding.decodePath(pts.encodedPoints)
+
+  socket.on "client_count", (count) ->
+    $("#client_count").html if count == 1 then "1 user" else "#{count} users"
 
   socket.on "location_update", (data) ->
     path = poly.getPath()

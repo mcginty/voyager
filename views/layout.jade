@@ -19,8 +19,14 @@ html
         margin: 5px;
         padding: 10px;
         background: rgba(255,255,255,0.8);
+      }
+      #description #title {
         font: 1.5em Helvetica, sans-serif;
         font-weight: 100;
+      }
+      #description #hint {
+        font: 0.8em Helvetica, sans-serif;
+        display: inline-block;
       }
   body
     block content
@@ -31,13 +37,18 @@ html
         script
           window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\\/script>')
         script(src='js/bootstrap.min.js')
-        script(defer, src='/js/script.js')
+        script(defer, src='/js/script.min.js')
         script(defer, src='/socket.io/socket.io.js')
         script
           var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-322489-6']); _gaq.push(['_trackPageview']);
           (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+        script
+          var _gauges = _gauges || []; (function(){var t=document.createElement('script');t.type='text/javascript';
+            t.async=true;t.id='gauges-tracker';t.setAttribute('data-site-id', '4faa9d18613f5d3472000030');
+            t.src = '//secure.gaug.es/track.js';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(t, s);
+          })();
         //if lt IE 7
           script(defer, src='//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js')
           script(defer)
