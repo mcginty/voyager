@@ -1,3 +1,3 @@
-voya.gr
+voyager
 =======
-automatic road trip memories so friends can be jealous.
+automatic road trip memories to remember the wonder years.
