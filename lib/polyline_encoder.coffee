@@ -21,7 +21,6 @@ class PolylineEncoder
     if points.length > 2
       stack.push [ 0, points.length - 1 ]
       while stack.length > 0
-        iter++
         current = stack.pop()
         maxDist = 0
         diff_lat = points[current[1]].lat() - points[current[0]].lat()
@@ -29,6 +28,7 @@ class PolylineEncoder
         segmentLength = diff_lat*diff_lat + diff_lng*diff_lng
         i = current[0] + 1
         while i < current[1]
+          iter++
           temp = @distance(points[i], points[current[0]], points[current[1]], segmentLength)
           if temp > maxDist
             maxDist = temp
