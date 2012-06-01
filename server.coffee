@@ -58,6 +58,7 @@ io.sockets.on "connection", (socket) ->
   io.sockets.emit "client_count", client_count
   # Perform a backfill of points in an encoded polyline for minimum bandwidth usage
   # and optimized viewing.
+  start = +new Date
   redis.zrange "trip", 0, -1, (err, pts) ->
     latlngs = []
     for pt in pts
@@ -65,7 +66,7 @@ io.sockets.on "connection", (socket) ->
       latlngs.push new encoder.LatLng location.latitude, location.longitude
 
     encoded = polyline.dpEncode latlngs
-    console.log "Backfill is #{encoded.length} bytes"
+    console.log "Backfill is #{encoded.length} bytes. Took #{+new Date - start}ms to calculate."
     socket.emit "location_backfill", encoded
 
   socket.on "message", (data) ->

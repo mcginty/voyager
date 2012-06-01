@@ -1,6 +1,5 @@
 class PolylineEncoder
   constructor: (numLevels, zoomFactor, verySmall, forceEndpoints) ->
-    i = undefined
     numLevels = 18  unless numLevels
     zoomFactor = 2  unless zoomFactor
     verySmall = 0.00001  unless verySmall
@@ -10,31 +9,22 @@ class PolylineEncoder
     @verySmall = verySmall
     @forceEndpoints = forceEndpoints
     @zoomLevelBreaks = new Array(numLevels)
-    i = 0
-    while i < numLevels
-      @zoomLevelBreaks[i] = verySmall * Math.pow(zoomFactor, numLevels - i - 1)
-      i++
+
+    @zoomLevelBreaks[i] = verySmall * Math.pow(zoomFactor, numLevels - i - 1) for i in [0..numLevels]
 
   dpEncode: (points) ->
     absMaxDist = 0
     stack = []
     dists = new Array(points.length)
-    maxDist = undefined
-    maxLoc = undefined
-    temp = undefined
-    first = undefined
-    last = undefined
-    current = undefined
-    i = undefined
-    encodedPoints = undefined
-    encodedLevels = undefined
-    segmentLength = undefined
+
     if points.length > 2
       stack.push [ 0, points.length - 1 ]
       while stack.length > 0
         current = stack.pop()
         maxDist = 0
-        segmentLength = Math.pow(points[current[1]].lat() - points[current[0]].lat(), 2) + Math.pow(points[current[1]].lng() - points[current[0]].lng(), 2)
+        diff_lat = points[current[1]].lat() - points[current[0]].lat()
+        diff_lng = points[current[1]].lng() - points[current[0]].lng()
+        segmentLength = diff_lat*diff_lat + diff_lng*diff_lng
         i = current[0] + 1
         while i < current[1]
           temp = @distance(points[i], points[current[0]], points[current[1]], segmentLength)
@@ -100,12 +90,12 @@ class PolylineEncoder
     u = undefined
     out = undefined
     if p1.lat() is p2.lat() and p1.lng() is p2.lng()
-      out = Math.sqrt(Math.pow(p2.lat() - p0.lat(), 2) + Math.pow(p2.lng() - p0.lng(), 2))
+      out = Math.pow(p2.lat() - p0.lat(), 2) + Math.pow(p2.lng() - p0.lng(), 2)
     else
       u = (p0.lat() - p1.lat()) * (p2.lat() - p1.lat()) + (p0.lng() - p1.lng()) * (p2.lng() - p1.lng()) / segLength
-      out = Math.sqrt(Math.pow(p0.lat() - p1.lat(), 2) + Math.pow(p0.lng() - p1.lng(), 2))  if u <= 0
-      out = Math.sqrt(Math.pow(p0.lat() - p2.lat(), 2) + Math.pow(p0.lng() - p2.lng(), 2))  if u >= 1
-      out = Math.sqrt(Math.pow(p0.lat() - p1.lat() - u * (p2.lat() - p1.lat()), 2) + Math.pow(p0.lng() - p1.lng() - u * (p2.lng() - p1.lng()), 2))  if 0 < u and u < 1
+      out = Math.pow(p0.lat() - p1.lat(), 2) + Math.pow(p0.lng() - p1.lng(), 2)  if u <= 0
+      out = Math.pow(p0.lat() - p2.lat(), 2) + Math.pow(p0.lng() - p2.lng(), 2)  if u >= 1
+      out = Math.pow(p0.lat() - p1.lat() - u * (p2.lat() - p1.lat()), 2) + Math.pow(p0.lng() - p1.lng() - u * (p2.lng() - p1.lng()), 2)  if 0 < u and u < 1
     out
 
   createEncodings: (points, dists) ->
