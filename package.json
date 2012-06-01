@@ -1,8 +1,8 @@
 {
-  "name": "YOUR-PROJECT-NAME-HERE",
-  "description": "YOUR PROJECT DESCRIPTION HERE",
-  "author": "YOUR NAME <your@emailaddress.com>",
-  "version": "0.0.1",
+  "name": "voyager",
+  "description": "trip tracking",
+  "author": "Jake McGinty <mcginty@illinois.edu>",
+  "version": "0.4",
   "dependencies": {
     "connect": "1.8.5",
     "express": "2.5.2",
@@ -15,5 +15,5 @@
 	"mocha": "*",
 	"should": "*"
   },
-  "engine": "node >= 0.6.6"
+  "engine": "node >= 0.6.15"
 }

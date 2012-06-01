@@ -63,7 +63,9 @@ io.sockets.on "connection", (socket) ->
     for pt in pts
       location = JSON.parse pt
       latlngs.push new encoder.LatLng location.latitude, location.longitude
+
     encoded = polyline.dpEncode latlngs
+    console.log "Backfill is #{encoded.length} bytes"
     socket.emit "location_backfill", encoded
 
   socket.on "message", (data) ->
