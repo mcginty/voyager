@@ -13,6 +13,7 @@ class PolylineEncoder
     @zoomLevelBreaks[i] = verySmall * Math.pow(zoomFactor, numLevels - i - 1) for i in [0..numLevels]
 
   dpEncode: (points) ->
+    start = +new Date
     absMaxDist = 0
     stack = []
     dists = new Array(points.length)
@@ -37,6 +38,7 @@ class PolylineEncoder
           dists[maxLoc] = maxDist
           stack.push [ current[0], maxLoc ]
           stack.push [ maxLoc, current[1] ]
+    console.log "dpEncode stack pushes took #{+new Date - start}ms"
     encodedPoints = @createEncodings(points, dists)
     encodedLevels = @encodeLevels(points, dists, absMaxDist)
     encodedPoints: encodedPoints
@@ -99,6 +101,7 @@ class PolylineEncoder
     out
 
   createEncodings: (points, dists) ->
+    start = +new Date
     i = undefined
     dlat = undefined
     dlng = undefined
@@ -119,6 +122,7 @@ class PolylineEncoder
         plng = lnge5
         encoded_points += @encodeSignedNumber(dlat) + @encodeSignedNumber(dlng)
       i++
+    console.log "createEncodings took #{+new Date - start}ms"
     encoded_points
 
   computeLevel: (dd) ->
@@ -129,6 +133,7 @@ class PolylineEncoder
       lev
 
   encodeLevels: (points, dists, absMaxDist) ->
+    start = +new Date
     i = undefined
     encoded_levels = ""
     if @forceEndpoints
@@ -143,6 +148,8 @@ class PolylineEncoder
       encoded_levels += @encodeNumber(@numLevels - 1)
     else
       encoded_levels += @encodeNumber(@numLevels - @computeLevel(absMaxDist) - 1)
+    console.log "encodeLevels took #{+new Date - start}ms"
+
     encoded_levels
 
   encodeNumber: (num) ->
