@@ -13,32 +13,13 @@ class PolylineEncoder
     @zoomLevelBreaks[i] = verySmall * Math.pow(zoomFactor, numLevels - i - 1) for i in [0..numLevels]
 
   dpEncode: (points) ->
+    square = (x) -> x * x
     start = +new Date
-    absMaxDist = 0
-    stack = []
-    dists = new Array(points.length)
-    iter = 0
-    if points.length > 2
-      stack.push [ 0, points.length - 1 ]
-      while stack.length > 0
-        current = stack.pop()
-        maxDist = 0
-        diff_lat = points[current[1]].lat() - points[current[0]].lat()
-        diff_lng = points[current[1]].lng() - points[current[0]].lng()
-        segmentLength = diff_lat*diff_lat + diff_lng*diff_lng
-        i = current[0] + 1
-        while i < current[1]
-          iter++
-          temp = @distance(points[i], points[current[0]], points[current[1]], segmentLength)
-          if temp > maxDist
-            maxDist = temp
-            maxLoc = i
-            absMaxDist = maxDist  if maxDist > absMaxDist
-          i++
-        if maxDist > @verySmall
-          dists[maxLoc] = maxDist
-          stack.push [ current[0], maxLoc ]
-          stack.push [ maxLoc, current[1] ]
+    point_count = points.length
+    dists = new Array(point_count)
+    dists = for point, i in points
+      neighbor = if i-1 >= 0 then point[i-1] else point[i+1]
+      Math.sqrt(square (point.lat() - neighbor.lat()) + square (point.lon()-neighbor.lon()))
     console.log "dpEncode stack pushes took #{+new Date - start}ms. Ran #{iter} iterations on #{points.length} points."
     encodedPoints = @createEncodings(points, dists)
     encodedLevels = @encodeLevels(points, dists, absMaxDist)
