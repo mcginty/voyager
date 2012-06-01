@@ -17,10 +17,11 @@ class PolylineEncoder
     absMaxDist = 0
     stack = []
     dists = new Array(points.length)
-
+    iter = 0
     if points.length > 2
       stack.push [ 0, points.length - 1 ]
       while stack.length > 0
+        iter++
         current = stack.pop()
         maxDist = 0
         diff_lat = points[current[1]].lat() - points[current[0]].lat()
@@ -38,7 +39,7 @@ class PolylineEncoder
           dists[maxLoc] = maxDist
           stack.push [ current[0], maxLoc ]
           stack.push [ maxLoc, current[1] ]
-    console.log "dpEncode stack pushes took #{+new Date - start}ms"
+    console.log "dpEncode stack pushes took #{+new Date - start}ms. Ran #{iter} iterations on #{points.length} points."
     encodedPoints = @createEncodings(points, dists)
     encodedLevels = @encodeLevels(points, dists, absMaxDist)
     encodedPoints: encodedPoints

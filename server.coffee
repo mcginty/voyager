@@ -66,7 +66,7 @@ io.sockets.on "connection", (socket) ->
       latlngs.push new encoder.LatLng location.latitude, location.longitude
     console.log "Points fetched from redis in #{+new Date - start}ms, sending to encoder..."
     encoded = polyline.dpEncode latlngs
-    console.log "Backfill is #{encoded.length} bytes. Took #{+new Date - start}ms to calculate."
+    console.log "Backfill is #{encoded.encodedPoints.length} bytes. Took #{+new Date - start}ms to calculate."
     socket.emit "location_backfill", encoded
 
   socket.on "message", (data) ->
