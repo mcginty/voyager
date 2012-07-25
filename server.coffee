@@ -87,8 +87,9 @@ server.get "/", (req, res) ->
 
 server.post "/report", (req,res) ->
   console.log "report #{req.body.timestamp.bold} -> (#{req.body.latitude},#{req.body.longitude})"
-  id = redis.incr "report"
-  redis.zadd "trip", req.body.timestamp, JSON.stringify({
+  trip_id = req.body.trip_id.replace(/\D/g,"")
+  id = redis.incr "report:#{trip_id}"
+  redis.zadd "trip:#{trip_id}", req.body.timestamp, JSON.stringify({
     latitude  : req.body.latitude
     longitude : req.body.longitude
     altitude  : req.body.altitude
