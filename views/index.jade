@@ -1,7 +1,81 @@
 extends base
 
+// TODO: move these to their own css for niceness's sake eventually.
+block head
+    style
+        #header
+        {
+            margin-left: 15px;
+        }
+        #tagline
+        {
+            display: inline;
+            color: rgb(150,150,150);
+            margin: 10px;
+        }
+        #watchers
+        {
+            margin-top: 10px;
+            color: rgb(150,150,150);
+        }
+        #description {
+            margin: 5px;
+            padding: 10px;
+            background: rgba(255,255,255,0.8);
+        }
+        #description #title {
+            display: inline-block;
+            font: 1.5em Helvetica, sans-serif;
+            font-weight: 100;
+        }
+        #hint {
+            position: absolute;
+            bottom: 0;
+            font: 0.8em Helvetica, sans-serif;
+            padding: 10px;
+            background: rgba(255,255,255,0.8);
+        }
+        #content {
+            margin: 20px;
+            font: 1.2em Helvetica, sans-serif;
+        }
+        #speed-gauge {
+            width: 250px;
+            height: 200px;
+            position:relative;
+            bottom:50px;
+            z-index: -1;
+        }
+        .point {
+            margin-right: 10px;
+        }
+        h1 {
+        font-weight : 100;
+        line-height: 60px;
+        }
+        .infodiv
+        {
+            margin-left: 15px;
+        }
+
 block content
-    div(id='map_canvas')
-    div(id='description')
-        div(id='title') Urbana &#8594 Los Angeles in real time. <span id="client_count">1 user</span> watching right now.
-        div(id='hint') Hint: Zoom in and/or change map type to see more detail and actually watch the line move if we're moving. S'cool I promise.
+    div.container-fluid.tall
+        div.row-fluid.tall
+            div.span4.tall
+                div#header
+                    h1 jake.su  proudly presents
+                div#description
+                    div#title <i style="color:red;" class="icon-pushpin point"></i> Los Angeles &#8594 <i style="color:blue;" class="icon-pushpin point"></i> Urbana
+                    div#tagline in real time.
+                    div#watchers.alert.alert-info
+                        span#client_count 1 user
+                        |  watching right now.
+                    div#last-seen
+                        h1 last seen
+                        div.infodiv#last_seen_time pretty much never.
+                    div#speed
+                        h1 speed
+                        div.infodiv#speed-gauge
+                div#hint <span class="label label-info">hint</span> zooming and changing the map styles is the greatest.
+            div.span8.tall
+                div#map_canvas.tall

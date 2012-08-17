@@ -1,6 +1,20 @@
 # Author: YOU
 
+
 $(document).ready ->
+
+  home = new google.maps.LatLng 40.105957017645, -88.21916878223419
+  hulu = new google.maps.LatLng 34.031344, -118.456717
+  current = null
+
+  speed = new JustGage {
+    id: "speed-gauge",
+    value: 0,
+    title: " ",
+    min: 0,
+    max: 130,
+    label: "m/s",
+  }
 
   arteriesStyle = [
     {
@@ -75,14 +89,14 @@ $(document).ready ->
       mapTypeIds: [google.maps.MapTypeId.SATELLITE, 'arteries', 'oceans_of_dehydrated_pee', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
 
   map = new google.maps.Map document.getElementById("map_canvas"), mapsOptions
-  map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
 
+  map.fitBounds new google.maps.LatLngBounds(hulu, home)
+
+  map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
   map.mapTypes.set 'arteries', arteriesMapType 
   map.setMapTypeId 'arteries'
 
-  home = new google.maps.LatLng 40.105957017645, -88.21916878223419
-  hulu = new google.maps.LatLng 34.031344, -118.456717
-  current = null
+
 
   setTimeout (->
     title = '<div id="content">Urbana, IL</div>'
@@ -118,14 +132,20 @@ $(document).ready ->
   $("#sender").bind "click", ->
     socket.emit "message", "Message Sent on " + new Date()
 
-  socket.on "location_backfill", (pts) ->
+  socket.on "path_backfill", (data) ->
+    pts = data.points
+    last_point = data.last_point
     path = google.maps.geometry.encoding.decodePath pts.encodedPoints
+    return if path.length <= 0
     poly.setPath path
     current = new google.maps.Marker
       map:map
       animation:google.maps.Animation.DROP
-      position:path[0]
+      position:path[path.length-1]
       icon:'http://labs.google.com/ridefinder/images/mm_20_red.png'
+    speed.refresh last_point.speed
+    $("#last_seen_time").html new Date(parseInt(last_point.timestamp)).toString()
+    $("#last_seen_time").easydate()
 
   socket.on "client_count", (count) ->
     $("#client_count").html if count == 1 then "1 user" else "#{count} users"
@@ -135,3 +155,5 @@ $(document).ready ->
     latlng = new google.maps.LatLng data.latitude, data.longitude
     path.push latlng
     current.setPosition latlng
+    $("#last_seen_time").html data.timestamp
+    speed.refresh data.speed
