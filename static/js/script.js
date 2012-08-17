@@ -124,7 +124,7 @@
     map.fitBounds(new google.maps.LatLngBounds(hulu, home));
     map.mapTypes.set('oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType);
     map.mapTypes.set('arteries', arteriesMapType);
-    map.setMapTypeId('arteries');
+    map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
     setTimeout((function() {
       var marker, title;
       title = '<div id="content">Urbana, IL</div>';

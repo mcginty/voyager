@@ -94,7 +94,7 @@ $(document).ready ->
 
   map.mapTypes.set 'oceans_of_dehydrated_pee', oceansOfDehydratedPeeMapType
   map.mapTypes.set 'arteries', arteriesMapType 
-  map.setMapTypeId 'arteries'
+  map.setMapTypeId google.maps.MapTypeId.TERRAIN
 
 
 
