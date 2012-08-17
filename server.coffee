@@ -64,7 +64,8 @@ io.sockets.on "connection", (socket) ->
   redis.zrange ["trip:#{trip_id}", 0, -1, "WITHSCORES"], (err, pts) ->
     latlngs = []
     i = 0
-
+    location = null
+    timestamp = 0
     while i < pts.length
       location = JSON.parse pts[i]
       timestamp = pts[i+1]
@@ -73,7 +74,7 @@ io.sockets.on "connection", (socket) ->
       i += 2
     encoded = polyline.dpEncode latlngs
     console.log "Backfill is #{encoded.encodedPoints.length} bytes. Took #{+new Date - start}ms to calculate."
-    location['timestamp'] = timestamp
+    location['timestamp'] = timestamp unless location is null
     socket.emit "path_backfill", { points: encoded, last_point: location }
 
   socket.on "message", (data) ->
