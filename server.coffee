@@ -16,6 +16,8 @@ polyline = new encoder.PolylineEncoder
 
 redis   = require("redis").createClient(null,null,{detect_buffers:true})
 
+trip_id = 1
+
 server.configure ->
   server.set "views", __dirname + "/views"
   server.set "view options",
@@ -59,15 +61,20 @@ io.sockets.on "connection", (socket) ->
   # Perform a backfill of points in an encoded polyline for minimum bandwidth usage
   # and optimized viewing.
   start = +new Date
-  redis.zrange "trip", 0, -1, (err, pts) ->
+  redis.zrange ["trip:#{trip_id}", 0, -1, "WITHSCORES"], (err, pts) ->
     latlngs = []
-    for pt in pts
-      location = JSON.parse pt
+    i = 0
+
+    while i < pts.length
+      location = JSON.parse pts[i]
+      timestamp = pts[i+1]
+      console.log timestamp
       latlngs.push new encoder.LatLng location.latitude, location.longitude
-    console.log "Points fetched from redis in #{+new Date - start}ms, sending to encoder..."
+      i += 2
     encoded = polyline.dpEncode latlngs
     console.log "Backfill is #{encoded.encodedPoints.length} bytes. Took #{+new Date - start}ms to calculate."
-    socket.emit "location_backfill", encoded
+    location['timestamp'] = timestamp
+    socket.emit "path_backfill", { points: encoded, last_point: location }
 
   socket.on "message", (data) ->
     socket.broadcast.emit "server_message", data
