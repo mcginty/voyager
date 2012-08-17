@@ -1,5 +1,6 @@
 # Author: YOU
 
+METERSPERSECOND_TO_MPH = 2.23694
 
 $(document).ready ->
 
@@ -13,7 +14,7 @@ $(document).ready ->
     title: " ",
     min: 0,
     max: 130,
-    label: "m/s",
+    label: "mph",
   }
 
   arteriesStyle = [
@@ -143,9 +144,9 @@ $(document).ready ->
       animation:google.maps.Animation.DROP
       position:path[path.length-1]
       icon:'http://labs.google.com/ridefinder/images/mm_20_red.png'
-    speed.refresh last_point.speed
-    $("#last_seen_time").html new Date(parseInt(last_point.timestamp)).toString()
-    $("#last_seen_time").easydate()
+    speed.refresh Math.round(last_point.speed * METERSPERSECOND_TO_MPH)
+    $(".easydate").attr "title", new Date(parseInt(last_point.timestamp)).toString()
+    $(".easydate").easydate()
 
   socket.on "client_count", (count) ->
     $("#client_count").html if count == 1 then "1 user" else "#{count} users"
@@ -155,5 +156,5 @@ $(document).ready ->
     latlng = new google.maps.LatLng data.latitude, data.longitude
     path.push latlng
     current.setPosition latlng
-    $("#last_seen_time").html data.timestamp
-    speed.refresh data.speed
+    $(".easydate").attr "title", data.timestamp
+    speed.refresh Math.round(data.speed * METERSPERSECOND_TO_MPH)
